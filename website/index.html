@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Colony - Humanity's Future</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
+      color: #e0f7fa;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(13, 27, 42, 0.8);
+      border-bottom: 2px solid #06d6a0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(6, 214, 160, 0.1) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #06d6a0, #90e0ef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(6, 214, 160, 0.5);
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+      box-shadow: 0 0 20px rgba(6, 214, 160, 0.2);
+    }
+
+    .intro p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .feature-card {
+      flex: 1 1 350px;
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #06d6a0, #118ab2);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(6, 214, 160, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: #06d6a0;
+      text-align: center;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .feature-description {
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .feature-details {
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-details h4 {
+      color: #06d6a0;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(6, 214, 160, 0.2);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .feature-list li:before {
+      content: "✓";
+      color: #06d6a0;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(6, 214, 160, 0.2);
+    }
+
+    .stat {
+      flex: 1;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #06d6a0;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #90e0ef;
+    }
+
+    /* NEW DESIGN FOR SPACE MAP */
+    .base-container {
+      position: relative;
+      margin: 3rem auto;
+    }
+
+    .map-container {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .controls-panel {
+      background: rgba(16, 23, 41, 0.8);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
+      backdrop-filter: blur(10px);
+      height: fit-content;
+    }
+
+    .controls-panel h2 {
+      color: #00e5ff;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .controls-panel h2 i {
+      font-size: 1.3rem;
+    }
+
+    .filter-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-section h3 {
+      color: #00ff95;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: #a0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0, 229, 255, 0.3);
+      color: #00e5ff;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    }
+
+    .room-list {
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .room-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .room-list::-webkit-scrollbar-track {
+      background: rgba(0, 229, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .room-list::-webkit-scrollbar-thumb {
+      background: rgba(0, 229, 255, 0.5);
+      border-radius: 10px;
+    }
+
+    .room-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid #00e5ff;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .room-item:hover {
+      background: rgba(0, 229, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    .room-item.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-left: 3px solid #00ff95;
+    }
+
+    .room-name {
+      font-weight: bold;
+      color: #00e5ff;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+
+    .room-status {
+      font-size: 0.8rem;
+      color: #00ff95;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00ff95;
+      display: inline-block;
+    }
+
+    .map-visualization {
+      background: rgba(16, 23, 41, 0.8);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .map-title {
+      color: #00e5ff;
+      font-size: 1.4rem;
+    }
+
+    .map-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .map-btn {
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: #a0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+    }
+
+    .map-btn:hover {
+      background: rgba(0, 229, 255, 0.3);
+      color: #00e5ff;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    }
+
+    .base-map {
+      position: relative;
+      height: 500px;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 255, 149, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(148, 0, 255, 0.05) 0%, transparent 50%);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    /* Structural elements */
+    .main-hall {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 350px;
+      background: rgba(0, 229, 255, 0.1);
+      border: 2px solid rgba(0, 229, 255, 0.5);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .hall-node {
+      width: 15px;
+      height: 15px;
+      background: rgba(0, 229, 255, 0.7);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+    }
+
+    /* Room styles - REDUCED DIMENSIONS */
+    .room {
+      position: absolute;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0.8rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+    }
+
+    .room:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+      z-index: 10;
+    }
+
+    .room.active {
+      box-shadow: 0 0 25px rgba(0, 255, 149, 0.7);
+      border-color: #00ff95;
+    }
+
+    .room-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+      color: #00e5ff;
+    }
+
+    .room-label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #a0e7ff;
+    }
+
+    .room-details {
+      position: absolute;
+      background: rgba(16, 23, 41, 0.95);
+      border: 1px solid rgba(0, 229, 255, 0.5);
+      border-radius: 12px;
+      padding: 1.2rem;
+      width: 280px;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: none;
+    }
+
+    .room-details h3 {
+      color: #00e5ff;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .room-details p {
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .room-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0.5rem;
+      background: rgba(0, 229, 255, 0.1);
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #00ff95;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: #a0e7ff;
+    }
+
+    /* Connection lines */
+    .connection {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.7), transparent);
+      transform-origin: left center;
+      z-index: 1;
+    }
+
+    .connection::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(0, 229, 255, 0.7);
+      border-radius: 50%;
+      top: -3px;
+      right: -4px;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+    }
+
+    /* Specific room positions - SMALLER DIMENSIONS */
+    .residential {
+      top: 20%;
+      left: 15%;
+      width: 110px;
+      height: 90px;
+      background: rgba(0, 100, 255, 0.15);
+    }
+
+    .laboratory {
+      top: 20%;
+      right: 15%;
+      width: 110px;
+      height: 90px;
+      background: rgba(148, 0, 255, 0.15);
+    }
+
+    .control-center {
+      top: 50%;
+      left: 15%;
+      transform: translateY(-50%);
+      width: 110px;
+      height: 90px;
+      background: rgba(255, 200, 0, 0.15);
+    }
+
+    .hydroponics {
+      top: 50%;
+      right: 15%;
+      transform: translateY(-50%);
+      width: 110px;
+      height: 90px;
+      background: rgba(0, 200, 0, 0.15);
+    }
+
+    .sports {
+      bottom: 20%;
+      left: 15%;
+      width: 110px;
+      height: 90px;
+      background: rgba(255, 100, 0, 0.15);
+    }
+
+    .observatory {
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 90px;
+      background: rgba(0, 200, 255, 0.15);
+    }
+
+    .medical {
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 90px;
+      background: rgba(255, 0, 100, 0.15);
+    }
+
+    /* Thruster */
+    .thruster {
+      position: absolute;
+      bottom: 10%;
+      right: 8%;
+      width: 60px;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .thruster-body {
+      width: 45px;
+      height: 120px;
+      background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      border: 1px solid rgba(255, 100, 0, 0.5);
+    }
+
+    .thruster-flame {
+      width: 60px;
+      height: 80px;
+      background: linear-gradient(to bottom, #ff4400, #ffaa00, transparent);
+      border-radius: 30px 30px 0 0;
+      filter: blur(4px);
+      animation: flame 0.8s infinite alternate;
+      margin-top: -8px;
+    }
+
+    @keyframes flame {
+      0% { height: 60px; opacity: 0.8; }
+      100% { height: 90px; opacity: 1; }
+    }
+
+    /* Oxygen tubes */
+    .oxygen-tube {
+      position: absolute;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.7), transparent);
+      border-radius: 2px;
+    }
+
+    .tube-1 {
+      top: 30%;
+      right: 12%;
+      width: 120px;
+      transform: rotate(30deg);
+    }
+
+    .tube-2 {
+      top: 50%;
+      right: 12%;
+      width: 120px;
+      transform: rotate(-30deg);
+    }
+
+    .pulse {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(0, 200, 255, 1);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 200, 255, 1);
+      animation: pulse 3s infinite linear;
+    }
+
+    @keyframes pulse {
+      0% { left: 0%; }
+      100% { left: 100%; }
+    }
+
+    /* Responsive design */
+    @media (max-width: 1100px) {
+      .map-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls-panel {
+        order: 2;
+      }
+      
+      .map-visualization {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .base-map {
+        height: 400px;
+      }
+      
+      .map-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      
+      .map-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    /* Rest of existing CSS */
+    #tooltip {
+      position: fixed;
+      background: rgba(0,0,0,0.8);
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: white;
+      font-size: 14px;
+      display: none;
+      pointer-events: none;
+      z-index: 100;
+      border: 1px solid #06d6a0;
+    }
+
+    #ship {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      background: #06d6a0;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      pointer-events: none;
+      z-index: 99;
+      box-shadow: 0 0 15px #06d6a0;
+      transition: transform 0.1s;
+    }
+
+    .registration {
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-top: 3rem;
+      text-align: center;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+    }
+
+    .registration h2 {
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #90e0ef;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #06d6a0;
+      background: rgba(13, 27, 42, 0.7);
+      color: #e0f7fa;
+      font-size: 1rem;
+    }
+
+    button {
+      background: linear-gradient(to right, #06d6a0, #118ab2);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(6, 214, 160, 0.5);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1b4332, #1d3557);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 2px solid #06d6a0;
+      box-shadow: 0 0 30px rgba(6, 214, 160, 0.5);
+    }
+
+    .modal h2 {
+      margin-bottom: 1rem;
+      color: #90e0ef;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #90e0ef;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(6, 214, 160, 0.3);
+      color: #90e0ef;
+    }
+
+    .header-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+  .header-button {
+    display: inline-block;
+    background: linear-gradient(to right, #06d6a0, #118ab2);
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 1rem;
+  }
+
+  .header-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(6, 214, 160, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .header-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .features {
+        flex-direction: column;
+      }
+      
+      .feature-card {
+        flex: 1 1 100%;
+      }
+      
+      .stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <header>
+    <h1>Space Colony - Humanity's Future</h1>
+    <p class="tagline">A home among the stars with Earth-like conditions</p>
+  </header>
+
+  <!-- Adăugați acest cod în header, după tagline -->
+  <div class="header-buttons">
+    <a href="life-in-space.html" class="header-button">Life in Space</a>
+    <a href="presentation.html" class="header-button">Our Presentation</a>
+  </div>
+
+  <div class="container">
+    <section class="intro">
+      <p>Welcome to the future of space colonization! This space colony offers living conditions similar to Earth, with advanced life support systems, artificial gravity, and a safe environment for long-term living.</p>
+      <p>Our base consists of 7 specialized rooms, each with a specific purpose in maintaining a sustainable community in space.</p>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-wind"></i>
+        </div>
+        <h3>Advanced Oxygen Systems</h3>
+        <p class="feature-description">Our oxygen generation system ensures a breathable and healthy atmosphere for all colony residents, using cutting-edge technologies to recreate Earth-like conditions.</p>
+        
+        <div class="feature-details">
+          <h4>Technologies used:</h4>
+          <ul class="feature-list">
+            <li>Enhanced efficiency artificial photosynthesis</li>
+            <li>Advanced water electrolysis</li>
+            <li>Genetically modified algae filters</li>
+            <li>UV purification air recirculation systems</li>
+            <li>Real-time air quality sensors</li>
+          </ul>
+        </div>
+        
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">99.8%</span>
+            <span class="stat-label">Air purity</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Monitoring</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">5+</span>
+            <span class="stat-label">Backup systems</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-recycle"></i>
+        </div>
+        <h3>Advanced Complete Recycling</h3>
+        <p class="feature-description">Our recycling system transforms 98% of waste into reusable resources, creating a closed ecosystem that minimizes dependence on Earth supplies.</p>
+        
+        <div class="feature-details">
+          <h4>Implemented processes:</h4>
+          <ul class="feature-list">
+            <li>Advanced water recycling with molecular purification</li>
+            <li>Accelerated composting for organic waste</li>
+            <li>Transformation of plastic waste into 3D filaments</li>
+            <li>Recovery and purification of precious metals</li>
+            <li>Medical waste treatment systems</li>
+          </ul>
+        </div>
+        
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">98%</span>
+            <span class="stat-label">Recycling</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">0</span>
+            <span class="stat-label">Waste in space</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Water recirculated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h3>Advanced Space Agriculture</h3>
+        <p class="feature-description">Our hydroponic and aeroponic greenhouses produce fresh and nutritious food for the entire colony, using specialized LED lighting and precision cultivation techniques.</p>
+        
+        <div class="feature-details">
+          <h4>Main features:</h4>
+          <ul class="feature-list">
+            <li>Greenhouses with adjustable spectral lighting</li>
+            <li>Hydroponic systems with nutrient recirculation</li>
+            <li>Aeroponic agriculture for root vegetables</li>
+            <li>Automatic climate and humidity control</li>
+            <li>Continuous production throughout the year</li>
+          </ul>
+        </div>
+        
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">85%</span>
+            <span class="stat-label">Self-sufficiency</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">40+</span>
+            <span class="stat-label">Plant types</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">3x</span>
+            <span class="stat-label">Faster growth</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODERN SPACE MAP -->
+    <section class="base-container">
+      <div class="map-container">
+        <div class="controls-panel">
+          <h2><i class="fas fa-cogs"></i> Control Panel</h2>
+          
+          <div class="filter-section">
+            <h3>Filter by category</h3>
+            <div class="filter-buttons">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="residential">Residential</button>
+              <button class="filter-btn" data-filter="science">Science</button>
+              <button class="filter-btn" data-filter="life-support">Life Support</button>
+              <button class="filter-btn" data-filter="recreation">Recreation</button>
+            </div>
+          </div>
+          
+          <div class="filter-section">
+            <h3>Room List</h3>
+            <div class="room-list">
+              <div class="room-item active" data-room="residential">
+                <div class="room-name">Residential Sector</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 94% occupied</div>
+              </div>
+              <div class="room-item" data-room="laboratory">
+                <div class="room-name">Scientific Laboratory</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 12 people</div>
+              </div>
+              <div class="room-item" data-room="control-center">
+                <div class="room-name">Control Center</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 6 operators</div>
+              </div>
+              <div class="room-item" data-room="hydroponics">
+                <div class="room-name">Hydroponic Greenhouse</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 98% productive</div>
+              </div>
+              <div class="room-item" data-room="sports">
+                <div class="room-name">Sports Hall</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 4 people</div>
+              </div>
+              <div class="room-item" data-room="observatory">
+                <div class="room-name">Observatory</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 2 astronomers</div>
+              </div>
+              <div class="room-item" data-room="medical">
+                <div class="room-name">Medical Center</div>
+                <div class="room-status"><span class="status-dot"></span> Active - 1 patient</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-visualization">
+          <div class="map-header">
+            <div class="map-title">Base Structural Map</div>
+            <div class="map-actions">
+              <button class="map-btn"><i class="fas fa-search-plus"></i> Zoom</button>
+              <button class="map-btn"><i class="fas fa-layer-group"></i> Layers</button>
+              <button class="map-btn"><i class="fas fa-download"></i> Export</button>
+            </div>
+          </div>
+
+          <div class="base-map">
+            <!-- Main structure -->
+            <div class="main-hall">
+              <div class="hall-node"></div>
+              <div class="hall-node"></div>
+              <div class="hall-node"></div>
+              <div class="hall-node"></div>
+            </div>
+
+            <!-- Rooms -->
+            <div class="room residential active" data-room="residential">
+              <i class="fas fa-home room-icon"></i>
+              <div class="room-label">Residential</div>
+            </div>
+
+            <div class="room laboratory" data-room="laboratory">
+              <i class="fas fa-flask room-icon"></i>
+              <div class="room-label">Laboratory</div>
+            </div>
+
+            <div class="room control-center" data-room="control-center">
+              <i class="fas fa-satellite-dish room-icon"></i>
+              <div class="room-label">Control</div>
+            </div>
+
+            <div class="room hydroponics" data-room="hydroponics">
+              <i class="fas fa-leaf room-icon"></i>
+              <div class="room-label">Greenhouse</div>
+            </div>
+
+            <div class="room sports" data-room="sports">
+              <i class="fas fa-dumbbell room-icon"></i>
+              <div class="room-label">Sports Hall</div>
+            </div>
+
+            <div class="room observatory" data-room="observatory">
+              <i class="fas fa-star room-icon"></i>
+              <div class="room-label">Observatory</div>
+            </div>
+
+            <div class="room medical" data-room="medical">
+              <i class="fas fa-plus-square room-icon"></i>
+              <div class="room-label">Medical</div>
+            </div>
+
+            <!-- Connections -->
+            <div class="connection" style="top: 30%; left: 25%; width: 150px; transform: rotate(0deg);"></div>
+            <div class="connection" style="top: 30%; right: 25%; width: 150px; transform: rotate(0deg);"></div>
+            <div class="connection" style="top: 50%; left: 25%; width: 150px; transform: rotate(0deg);"></div>
+            <div class="connection" style="top: 50%; right: 25%; width: 150px; transform: rotate(0deg);"></div>
+            <div class="connection" style="bottom: 30%; left: 25%; width: 150px; transform: rotate(0deg);"></div>
+            <div class="connection" style="top: 20%; left: 50%; width: 100px; transform: rotate(90deg);"></div>
+            <div class="connection" style="bottom: 20%; left: 50%; width: 100px; transform: rotate(90deg);"></div>
+
+            <!-- Oxygen tubes -->
+            <div class="oxygen-tube tube-1">
+              <div class="pulse"></div>
+            </div>
+            <div class="oxygen-tube tube-2">
+              <div class="pulse"></div>
+            </div>
+
+            <!-- Thruster -->
+            <div class="thruster">
+              <div class="thruster-body"></div>
+              <div class="thruster-flame"></div>
+            </div>
+
+            <!-- Room details panel -->
+            <div class="room-details" id="room-details">
+              <h3 id="detail-title">Residential Sector</h3>
+              <p id="detail-description">Modern living units with panoramic views of the cosmos. Each unit is equipped with life support systems, adjustable lighting, and optimized storage spaces.</p>
+              <div class="room-stats">
+                <div class="stat">
+                  <div class="stat-value">94%</div>
+                  <div class="stat-label">Occupancy</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">24°C</div>
+                  <div class="stat-label">Temperature</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">62</div>
+                  <div class="stat-label">Residents</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">100%</div>
+                  <div class="stat-label">Oxygen</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- tooltip -->
+    <div id="tooltip"></div>
+
+    <!-- cursor ship -->
+    <div id="ship"></div>
+
+    <section class="registration">
+      <h2>Sign up for a life in space</h2>
+      <p>Complete the form to symbolically register as a future space colonist.</p>
+      
+      <form id="registration-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="planet">Preferred Planet for Colonization</label>
+          <select id="planet" required>
+            <option value="">Choose a planet</option>
+            <option value="mars">Mars</option>
+            <option value="moon">Moon</option>
+            <option value="europa">Europa (Jupiter's moon)</option>
+            <option value="titan">Titan (Saturn's moon)</option>
+            <option value="orbit">Orbital Station</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="skills">Skills and Competencies</label>
+          <input type="text" id="skills" placeholder="Ex: engineering, medicine, agriculture, etc." required>
+        </div>
+        
+        <button type="submit">Register for the Future</button>
+      </form>
+    </section>
+  </div>
+
+  <div id="success-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Congratulations, Space Colonist!</h2>
+      <p>You have successfully registered in our space colonization program.</p>
+      <p>You will receive updates about mission progress and future opportunities.</p>
+      <p>Together we will build humanity's future among the stars!</p>
+      <button id="close-modal" onclick="window.location.href='life-in-space.html'">Explore More</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Space Colonization Project &copy; 2025 - Humanity's Future</p>
+  </footer>
+
+  <script>
+    // Create stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 500; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // custom cursor (ship)
+    const ship = document.getElementById('ship');
+    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+    let shipX = mouseX, shipY = mouseY;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      shipX += (mouseX - shipX) * 0.1;
+      shipY += (mouseY - shipY) * 0.1;
+      ship.style.left = shipX + "px";
+      ship.style.top = shipY + "px";
+      
+      // Rotate the ship in the direction of movement
+      const dx = mouseX - shipX;
+      const dy = mouseY - shipY;
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      ship.style.transform = `rotate(${angle - 45}deg)`;
+      
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // INTERACTIVE SPACE MAP
+    // Room data
+    const roomData = {
+      residential: {
+        title: "Residential Sector",
+        description: "Modern living units with panoramic views of the cosmos. Each unit is equipped with life support systems, adjustable lighting, and optimized storage spaces.",
+        stats: {
+          occupancy: "94%",
+          temperature: "24°C",
+          residents: "62",
+          oxygen: "100%"
+        }
+      },
+      laboratory: {
+        title: "Scientific Laboratory",
+        description: "Advanced research center equipped with state-of-the-art technology for experiments in microgravity. Specialized in space biology, materials physics, and astrophysics.",
+        stats: {
+          occupancy: "65%",
+          temperature: "22°C",
+          researchers: "12",
+          experiments: "8"
+        }
+      },
+      "control-center": {
+        title: "Control Center",
+        description: "The operational brain of the base. Monitors all vital systems, communications, and navigation. Equipped with advanced consoles and redundant backup systems.",
+        stats: {
+          occupancy: "100%",
+          temperature: "20°C",
+          operators: "6",
+          systems: "47"
+        }
+      },
+      hydroponics: {
+        title: "Hydroponic Greenhouse",
+        description: "Advanced cultivation system that provides 85% of the fresh food requirement for the colony. Uses latest generation hydroponic and aeroponic technologies.",
+        stats: {
+          productivity: "98%",
+          temperature: "26°C",
+          plantSpecies: "42",
+          oxygenProduction: "35%"
+        }
+      },
+      sports: {
+        title: "Sports and Recovery Hall",
+        description: "Complete facility for maintaining physical health in microgravity conditions. Includes cardio equipment, resistance training, and physical therapy.",
+        stats: {
+          occupancy: "30%",
+          temperature: "21°C",
+          currentUsers: "4",
+          equipment: "22"
+        }
+      },
+      observatory: {
+        title: "Astronomical Observatory",
+        description: "360° view dome equipped with high-resolution telescopes for observing the cosmos and monitoring space traffic.",
+        stats: {
+          occupancy: "40%",
+          temperature: "19°C",
+          astronomers: "2",
+          telescopes: "3"
+        }
+      },
+      medical: {
+        title: "Medical Center",
+        description: "Fully equipped hospital for treating and preventing medical conditions in the space environment. Includes operating room, laboratory, and diagnostic unit.",
+        stats: {
+          occupancy: "10%",
+          temperature: "23°C",
+          patients: "1",
+          medicalStaff: "5"
+        }
+      }
+    };
+
+    // Room interaction
+    const rooms = document.querySelectorAll('.room');
+    const roomItems = document.querySelectorAll('.room-item');
+    const roomDetails = document.getElementById('room-details');
+    const detailTitle = document.getElementById('detail-title');
+    const detailDescription = document.getElementById('detail-description');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    function showRoomDetails(roomType) {
+      const data = roomData[roomType];
+      detailTitle.textContent = data.title;
+      detailDescription.textContent = data.description;
+      
+      // Update stats
+      const statsContainer = document.querySelector('.room-stats');
+      statsContainer.innerHTML = '';
+      
+      for (const [key, value] of Object.entries(data.stats)) {
+        const statDiv = document.createElement('div');
+        statDiv.className = 'stat';
+        
+        const statValue = document.createElement('div');
+        statValue.className = 'stat-value';
+        statValue.textContent = value;
+        
+        const statLabel = document.createElement('div');
+        statLabel.className = 'stat-label';
+        statLabel.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+        
+        statDiv.appendChild(statValue);
+        statDiv.appendChild(statLabel);
+        statsContainer.appendChild(statDiv);
+      }
+      
+      roomDetails.style.display = 'block';
+    }
+
+    function hideRoomDetails() {
+      roomDetails.style.display = 'none';
+    }
+
+    function activateRoom(roomElement) {
+      // Deactivate all rooms
+      rooms.forEach(room => room.classList.remove('active'));
+      roomItems.forEach(item => item.classList.remove('active'));
+      
+      // Activate selected room
+      roomElement.classList.add('active');
+      const roomType = roomElement.dataset.room;
+      
+      // Activate corresponding list item
+      document.querySelector(`.room-item[data-room="${roomType}"]`).classList.add('active');
+      
+      // Show details
+      showRoomDetails(roomType);
+    }
+
+    // Add event listeners to rooms
+    rooms.forEach(room => {
+      room.addEventListener('click', (e) => {
+        e.stopPropagation();
+        activateRoom(room);
+      });
+    });
+
+    // Add event listeners to room list items
+    roomItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const roomType = item.dataset.room;
+        const roomElement = document.querySelector(`.room[data-room="${roomType}"]`);
+        activateRoom(roomElement);
+      });
+    });
+
+    // Add event listeners to filter buttons
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const filter = button.dataset.filter;
+        
+        if (filter === 'all') {
+          rooms.forEach(room => room.style.display = 'flex');
+          roomItems.forEach(item => item.style.display = 'block');
+        } else {
+          // This is a simplified filter - in a real app you would have proper room categories
+          rooms.forEach(room => {
+            if (room.dataset.room === filter) {
+              room.style.display = 'flex';
+            } else {
+              room.style.display = 'none';
+            }
+          });
+          
+          roomItems.forEach(item => {
+            if (item.dataset.room === filter) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        }
+      });
+    });
+
+    // Hide details when clicking on the map background
+    document.querySelector('.base-map').addEventListener('click', (e) => {
+      if (e.target === document.querySelector('.base-map')) {
+        hideRoomDetails();
+        rooms.forEach(room => room.classList.remove('active'));
+        roomItems.forEach(item => item.classList.remove('active'));
+      }
+    });
+
+    // Initialize with residential room active
+    document.querySelector('.room.residential').click();
+
+    // Registration form
+    const registrationForm = document.getElementById('registration-form');
+    const successModal = document.getElementById('success-modal');
+    const closeModal = document.querySelector('.close');
+    const closeModalBtn = document.getElementById('close-modal');
+
+    registrationForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Here the data would normally be sent to the server
+      // For this demo, we only show the success modal
+      successModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', function() {
+      successModal.style.display = 'none';
+    });
+
+    closeModalBtn.addEventListener('click', function() {
+      successModal.style.display = 'none';
+      window.location.href = 'life-in-space.html';
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target === successModal) {
+        successModal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

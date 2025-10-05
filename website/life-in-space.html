@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life in Space - Space Colony</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
+      color: #e0f7fa;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(13, 27, 42, 0.8);
+      border-bottom: 2px solid #06d6a0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(6, 214, 160, 0.1) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .spaceship-logo {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      filter: drop-shadow(0 0 10px rgba(6, 214, 160, 0.7));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #06d6a0, #90e0ef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(6, 214, 160, 0.5);
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+    }
+
+    .back-button {
+      display: inline-block;
+      background: linear-gradient(to right, #06d6a0, #118ab2);
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      transition: all 0.3s;
+    }
+
+    .back-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(6, 214, 160, 0.5);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 3rem 2rem;
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+      box-shadow: 0 0 20px rgba(6, 214, 160, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-gif {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      box-shadow: 0 0 25px rgba(6, 214, 160, 0.4);
+      border: 2px solid rgba(6, 214, 160, 0.3);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #90e0ef;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .life-aspects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .aspect-card {
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .aspect-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(6, 214, 160, 0.3);
+    }
+
+    .aspect-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #06d6a0;
+      text-align: center;
+    }
+
+    .aspect-card h3 {
+      margin-bottom: 1rem;
+      color: #90e0ef;
+      font-size: 1.5rem;
+    }
+
+    .aspect-card p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .aspect-features {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .aspect-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(6, 214, 160, 0.2);
+    }
+
+    .aspect-features li:before {
+      content: "✓";
+      color: #06d6a0;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .daily-schedule {
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+    }
+
+    .daily-schedule h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #90e0ef;
+    }
+
+    .schedule-timeline {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .schedule-item {
+      display: flex;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .schedule-time {
+      background: #06d6a0;
+      color: #0d1b2a;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .schedule-activity {
+      flex: 1;
+      padding: 0.5rem 1.5rem;
+      background: rgba(13, 27, 42, 0.5);
+      border-radius: 10px;
+      margin-left: 1rem;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .comparison-card {
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+    }
+
+    .comparison-card h3 {
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+    }
+
+    .comparison-list {
+      list-style: none;
+      text-align: left;
+    }
+
+    .comparison-list li {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(6, 214, 160, 0.2);
+    }
+
+    .earth li:before {
+      content: "🌍";
+      margin-right: 0.5rem;
+    }
+
+    .space li:before {
+      content: "🚀";
+      margin-right: 0.5rem;
+    }
+
+    .cta {
+      text-align: center;
+      background: rgba(27, 67, 50, 0.3);
+      border-radius: 15px;
+      padding: 3rem 2rem;
+      border: 1px solid rgba(6, 214, 160, 0.3);
+      box-shadow: 0 0 20px rgba(6, 214, 160, 0.2);
+    }
+
+    .cta h2 {
+      margin-bottom: 1.5rem;
+      color: #90e0ef;
+    }
+
+    .cta p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(to right, #06d6a0, #118ab2);
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(6, 214, 160, 0.5);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(6, 214, 160, 0.3);
+      color: #90e0ef;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero h2 {
+        font-size: 2rem;
+      }
+      
+      .life-aspects {
+        grid-template-columns: 1fr;
+      }
+      
+      .schedule-item {
+        flex-direction: column;
+      }
+      
+      .schedule-activity {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      
+      .logo-container {
+        flex-direction: column;
+      }
+      
+      .spaceship-logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <header>
+    <div class="logo-container">
+      <!-- Logo-ul navei spațiale -->
+      <svg class="spaceship-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,10 L70,40 L60,50 L70,60 L50,90 L30,60 L40,50 L30,40 Z" fill="#06d6a0" />
+        <circle cx="50" cy="50" r="15" fill="#0d1b2a" />
+        <circle cx="50" cy="50" r="5" fill="#06d6a0" />
+      </svg>
+      <h1>Life in Space</h1>
+    </div>
+    <p class="tagline">Discover the new way of living beyond Earth</p>
+    <a href="index.html" class="back-button">← Back to Main Base</a>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <h2>A New Era for Humanity</h2>
+      <p>Life in our space colony is a transformative experience that combines advanced technology with the comfort of a sustainable community. Here, each day brings new opportunities for exploration and personal growth.</p>
+      
+      <!-- GIF-ul Spacetopia integrat -->
+      <img src="Spacetopiagif.gif" alt="Spacetopia Space Colony" class="hero-gif">
+      
+      <p>Experience the beauty and innovation of our Spacetopia colony, where cutting-edge technology meets the comfort of home in the vastness of space.</p>
+    </section>
+
+    <section class="life-aspects">
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-home"></i>
+        </div>
+        <h3>Space Housing</h3>
+        <p>Modern residential units with all necessary facilities for comfortable living:</p>
+        <ul class="aspect-features">
+          <li>Private rooms with cosmic views</li>
+          <li>Adjustable lighting systems simulating the day cycle</li>
+          <li>Ergonomic furniture adapted to artificial gravity</li>
+          <li>Common spaces for socialization and relaxation</li>
+        </ul>
+      </div>
+
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-utensils"></i>
+        </div>
+        <h3>Food and Nutrition</h3>
+        <p>Advanced food production and preparation system:</p>
+        <ul class="aspect-features">
+          <li>Hydroponic greenhouses with fresh vegetables and fruits</li>
+          <li>Diverse menu adapted to nutritional needs in space</li>
+          <li>Restaurant with panoramic view of Earth</li>
+          <li>Vegetarian and vegan options available</li>
+        </ul>
+      </div>
+
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <h3>Health and Well-being</h3>
+        <p>Continuous medical assistance and wellness programs:</p>
+        <ul class="aspect-features">
+          <li>Medical center with state-of-the-art technology</li>
+          <li>Exercise programs for maintaining muscle mass</li>
+          <li>Psychological consultants for adapting to space life</li>
+          <li>Meditation and relaxation zones</li>
+        </ul>
+      </div>
+
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <h3>Work and Career</h3>
+        <p>Unique professional opportunities in various fields:</p>
+        <ul class="aspect-features">
+          <li>Scientific research in microgravity conditions</li>
+          <li>Engineering and maintenance of space systems</li>
+          <li>Space agriculture and biotechnology</li>
+          <li>Education and training for new colonists</li>
+        </ul>
+      </div>
+
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Social Life</h3>
+        <p>Vibrant community with diverse activities:</p>
+        <ul class="aspect-features">
+          <li>Cultural and artistic events</li>
+          <li>Clubs and associations based on interests</li>
+          <li>Recreation and entertainment spaces</li>
+          <li>Social network among colonists</li>
+        </ul>
+      </div>
+
+      <div class="aspect-card">
+        <div class="aspect-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3>Education and Development</h3>
+        <p>Continuous learning and growth opportunities:</p>
+        <ul class="aspect-features">
+          <li>Professional training programs</li>
+          <li>Specialization courses in space sciences</li>
+          <li>Creative and artistic workshops</li>
+          <li>Digital library with access to educational resources</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="daily-schedule">
+      <h2>A Typical Day in the Colony</h2>
+      <div class="schedule-timeline">
+        <div class="schedule-item">
+          <div class="schedule-time">06:30 - 07:30</div>
+          <div class="schedule-activity">Wake up and morning routine • Light physical exercises</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">07:30 - 08:30</div>
+          <div class="schedule-activity">Breakfast in the central restaurant • Day planning</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">08:30 - 12:00</div>
+          <div class="schedule-activity">Work schedule • Professional tasks and projects</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">12:00 - 13:30</div>
+          <div class="schedule-activity">Lunch break • Socialization and relaxation</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">13:30 - 16:00</div>
+          <div class="schedule-activity">Work sessions • Research and innovation</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">16:00 - 17:30</div>
+          <div class="schedule-activity">Physical training • Maintaining health in microgravity</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">17:30 - 19:30</div>
+          <div class="schedule-activity">Personal time • Study, hobbies, family</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">19:30 - 21:00</div>
+          <div class="schedule-activity">Dinner • Community events or time with friends</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">21:00 - 22:30</div>
+          <div class="schedule-activity">Relaxation • Astronomical observations, reading</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="comparison">
+      <div class="comparison-card">
+        <h3>Life on Earth</h3>
+        <ul class="comparison-list earth">
+          <li>Natural 24-hour day cycle</li>
+          <li>Constant 1G gravity</li>
+          <li>Natural atmosphere and magnetic protection</li>
+          <li>Abundant natural resources</li>
+          <li>Diverse ecosystems and climate</li>
+          <li>Well-established infrastructure</li>
+        </ul>
+      </div>
+
+      <div class="comparison-card">
+        <h3>Life in Space</h3>
+        <ul class="comparison-list space">
+          <li>Adjustable artificial day cycle</li>
+          <li>Customizable artificial gravity</li>
+          <li>Advanced life support systems</li>
+          <li>Circular economy and total recycling</li>
+          <li>Controlled and optimized environment</li>
+          <li>Community of pioneers and innovators</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Ready to Begin This Journey?</h2>
+      <p>Join our community of space pioneers and become part of humanity's future. Register now to be among the first colonists who will live this dream.</p>
+      <a href="index.html" class="cta-button">Register Now</a>
+    </section>
+  </div>
+
+  <footer>
+    <p>Space Colony Humanity's Future &copy; 2025 - All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Create stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 5 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // Smooth scroll animation for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
